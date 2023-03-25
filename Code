@@ -1,0 +1,105 @@
+Button Code:
+#include <Servo.h>
+
+int buttonPin = 7;
+int ledPin = 9;
+int count = 0;
+int desiredAmount = 10;
+
+// variables will change:
+int buttonState = 0;  // variable for reading the pushbutton status
+
+void setup() {
+// - Setup
+//     - set count to zero
+//     - set desired amount to 10
+// already initialized above
+  
+// setup light as output
+  pinMode(ledPin, OUTPUT);
+
+// setup button as input
+  pinMode(buttonPin, INPUT);
+
+}
+
+void loop() {
+// - Main Loop
+// read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+//     - if button is pressed then increment count
+  if (buttonState == HIGH){
+    //increment counter
+    count++;
+    delay(150);
+  }
+
+
+//     - if count is equal or greater to desired amount then turn green light on 
+//     -
+  if (count >= desiredAmount){
+    //turn led on
+    digitalWrite(ledPin, HIGH);
+  }
+
+}
+
+
+
+Servo Code:
+#include <Servo.h>
+
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+int pos = 0;    // variable to store the servo position
+
+void setup() {
+  myservo.attach(9);  // attaches the servo on pin 9 to the servo object
+}
+
+void loop() {
+  for (pos = 0; pos <= 80; pos += 1) { // goes from 0 degrees to 80 degrees
+    // in steps of 1 degree
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+  for (pos = 80; pos >= 0; pos -= 1) { // goes from 80 degrees to 0 degrees
+    myservo.write(pos);              // tell servo to go to position in variable 'pos'
+    delay(15);                       // waits 15ms for the servo to reach the position
+  }
+}
+
+
+
+Switch Code:
+#include <ezButton.h>
+
+ezButton toggleSwitch(7);  // create ezButton object that attach to pin 7;
+
+void setup() {
+  Serial.begin(9600);
+  toggleSwitch.setDebounceTime(50); // set debounce time to 50 milliseconds
+}
+
+void loop() {
+  toggleSwitch.loop(); // MUST call the loop() function first
+
+  if (toggleSwitch.isPressed())
+    Serial.println("The switch: OFF -> ON");
+    
+  if (toggleSwitch.isPressed()(\)
+    // implement count
+    count++;
+    delay(150)
+
+  if (toggleSwitch.isReleased())
+    Serial.println("The switch: ON -> OFF");
+
+  int state = toggleSwitch.getState();
+  if (state == HIGH)
+    Serial.println("The switch: OFF");
+  else
+    Serial.println("The switch: ON");
+}
