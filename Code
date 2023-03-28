@@ -103,3 +103,104 @@ void loop() {
   else
     Serial.println("The switch: ON");
 }
+ __________________________________________________________________
+ __________________________________________________________________
+
+EDITED SERVO CODE WITH BUTTON COUNT
+
+#include <Servo.h>
+
+int buttonPin = 7;
+int myservoPin = 9;
+int count = 0;
+int desiredAmount = 5;
+
+Servo myservo;  // create servo object to control a servo
+// twelve servo objects can be created on most boards
+
+// variables will change:
+int buttonState = 0;  // variable for reading the pushbutton status
+bool ismoved = false;
+void setup() {
+  // - Setup
+//     - set count to zero
+//     - set desired amount to 10
+// already initialized above
+  Serial.begin(9600);
+// setup servo as output
+  //pinMode(myservoPin, OUTPUT);
+// setup button as input
+  pinMode(buttonPin, INPUT);
+  myservo.attach(myservoPin);  // attaches the servo on pin 9 to the servo object
+  myservo.write(0);
+}
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH){
+    count++;    
+    delay(40);
+  }
+  if (count >= desiredAmount){
+    //turn servo 80 degrees
+    myservo.write(80);
+  }
+}
+
+EDITED BUTTON COUNT CODE
+
+#include <Servo.h>
+
+int buttonPin = 7;
+int ledPin = 9;
+int count = 0;
+int desiredAmount = 10;
+int lastButtonState;
+
+// variables will change:
+int buttonState = 0;  // variable for reading the pushbutton status
+
+void setup() {
+// - Setup
+//     - set count to zero
+//     - set desired amount to 10
+// already initialized above
+  Serial.begin(9600);
+  lastButtonState = digitalRead(buttonPin);
+  
+// setup light as output
+  pinMode(ledPin, OUTPUT);
+
+// setup button as input
+  pinMode(buttonPin, INPUT);
+
+}
+
+void loop() {
+// - Main Loop
+// read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+//     - if button is pressed then increment count
+  if (buttonState == HIGH){
+    //increment counter
+    count++;
+    delay(50);
+  }
+
+
+//     - if count is equal or greater to desired amount then turn green light on 
+//     -
+  if (count >= desiredAmount){
+    //turn led on
+    digitalWrite(ledPin, HIGH);
+  }
+  
+  int buttonState = digitalRead(buttonPin);{
+    lastButtonState = buttonState;
+    if (buttonState == LOW){
+      Serial.println("button has been released");
+    }
+  }
+
+}
