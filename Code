@@ -204,3 +204,78 @@ void loop() {
   }
 
 }
+
+
+______________________________________________________________________
+______________________________________________________________________
+
+SERVO CODE WITH SWITCH CONTROL
+__________________________________________
+
+#include <Servo.h>
+
+int toggleSwitch = 7;
+int count = 0;
+int desiredAmount = 3;
+int lastToggleSwitchState;
+int servoPin = 9;
+bool switchIsOn = false;
+
+Servo myservo; //create servo object to control a servo
+
+int pos = 0; // variable to store the servo object
+
+// variables will change:
+int switchState = 0;  // variable for reading the pushbutton status
+
+void setup() {
+  Serial.begin(9600);
+
+  // - Setup
+//     - set count to zero
+//     - set desired amount to 10
+// already initialized above
+  Serial.begin(9600);
+  lastToggleSwitchState = digitalRead(toggleSwitch);
+
+// setup switch as input
+  pinMode(toggleSwitch, INPUT);
+  myservo.attach(servoPin); // attaches the servo on pin 9 to the servo object
+  myservo.write(0);
+  
+}
+void loop() {
+  // - Main Loop
+  // read the state of the switch value:
+  switchState = digitalRead(toggleSwitch);
+    
+    // if switch is pressed then switch is on
+  if (switchState == HIGH && !switchIsOn){
+    switchIsOn = true;
+    //turn switch on
+    Serial.println("The switch is ON");
+ 
+    //increment count
+    count++;
+    delay(15);
+  }
+  else if(switchState != HIGH && switchIsOn) {
+    switchIsOn = false;
+    Serial.println("The switch is OFF");
+  }
+  else {
+    Serial.println(count);
+    delay(1000);
+  }
+
+  // - if the count reaches the desired amount then turn servo 80 degrees
+  if (count >= desiredAmount) {
+  // turn servo 80 degrees
+  myservo.write(80);
+  }
+  
+  delay(100);
+}
+
+________________________________________________________________________________
+________________________________________________________________________________
